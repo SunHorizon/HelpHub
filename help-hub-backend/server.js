@@ -2,12 +2,15 @@ const express = require('express');
 const cors = require('cors')
 const mongoose = require('mongoose');
 require('dotenv').config();
+const userRouter = require('./routers/users');
 
 verifyToken = require("./testFirebase");
 
 const app = express();
 
+app.use(express.json());
 app.use(cors());
+
 const PORT = process.env.PORT || 5000;
 
 
@@ -16,15 +19,12 @@ mongoose.connect(process.env.MONGODB_URI,  { useNewUrlParser: true, useUnifiedTo
     .catch(err => console.error("MangoDB connection error:", err));
 
 
-// Routes
 app.get('/', (req, res) => {
     res.send("Hello from HelpHub backend!");
 });
 
-// Routes
-app.get('/testFirebase', verifyToken,  (req, res) => {
-    res.json({ message: 'Secure data for ' + req.user.uid });
-});
+// create a user profile
+app.use('/api/users', userRouter);
 
 
 app.listen(PORT, () => {

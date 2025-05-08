@@ -3,12 +3,15 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase';
 import './auth.css'; 
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios'
+
 
 function SignUp(){
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmpassword, setConfirmpassword] = useState('');
     const [error, setError] = useState('');
+    const [userType, setUserType] = useState('');
 
     const [successMessage, setSuccessMessage] = useState('');
 
@@ -21,14 +24,24 @@ function SignUp(){
             return;
         }
         try{
-            await createUserWithEmailAndPassword(auth, email, password);
-            setSuccessMessage('Account created successfully! Redirecting to sign-in...');
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+            setSuccessMessage('Creating Account...');
 
+            await axios.post('http://localhost:5000/api/users', {
+                uid: user.uid,
+                email: user.email,
+                role: userType,
+            })
+
+            setSuccessMessage('Account created successfully! Redirecting to sign-in...');
             setTimeout(() => {
                 setSuccessMessage('');
                 negative('/');
-            }, 2000);
+            }, 3000);
+
         }catch(err){
+            setSuccessMessage('')
             let message = 'An error occurred. Please try again.';
             if (err.code === 'auth/email-already-in-use') message = 'Email is already in use.';
             if (err.code === 'auth/invalid-email') message = 'Invalid email address.';
@@ -74,6 +87,23 @@ function SignUp(){
                         className='auth-input'
                         onChange={(e) => setConfirmpassword(e.target.value)}
                     />
+
+                    <div className='form-group'>
+                        <label htmlFor='userType'>User Type:</label>
+                        <select  
+                            value={userType} 
+                            onChange={(e) => setUserType(e.target.value)} 
+                            required
+                            className='form-control'
+                            >
+                            <option value="">Select user type</option>
+                            <option value="volunteer">Volunteer</option>
+                            <option value="organizer">Organizer</option>
+
+
+                        </select>
+                    </div>
+
                     <button type='submit' className='auth-button'>Sign Up</button>
                     {error && <p style={{color: 'red'}} className='auth-error'>{error}</p>}
                     <p className='auth-subtext'>
