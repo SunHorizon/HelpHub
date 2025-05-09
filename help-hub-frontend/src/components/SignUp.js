@@ -15,7 +15,7 @@ function SignUp(){
 
     const [successMessage, setSuccessMessage] = useState('');
 
-    const negative = useNavigate();
+    const navigate = useNavigate();
 
     const handleSignUp = async (e) =>{
         e.preventDefault();
@@ -37,7 +37,7 @@ function SignUp(){
             setSuccessMessage('Account created successfully! Redirecting to sign-in...');
             setTimeout(() => {
                 setSuccessMessage('');
-                negative('/');
+                navigate('/');
             }, 3000);
 
         }catch(err){

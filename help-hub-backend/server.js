@@ -3,6 +3,7 @@ const cors = require('cors')
 const mongoose = require('mongoose');
 require('dotenv').config();
 const userRouter = require('./routers/users');
+const eventRouter = require('./routers/events');
 
 verifyToken = require("./testFirebase");
 
@@ -25,6 +26,10 @@ app.get('/', (req, res) => {
 
 // create a user profile
 app.use('/api/users', userRouter);
+
+
+// event router
+app.use('/api/events', eventRouter);
 
 
 app.listen(PORT, () => {

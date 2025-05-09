@@ -1,26 +1,38 @@
 import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './auth.css'; 
 import axios from 'axios'
+import { useUser } from '../contexts/UserContexts';
+
 
 function SignIn(){
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const { setUser } = useUser();
+
+    const navigate = useNavigate();
 
     const handleSignIn = async (e) => {
         e.preventDefault();
         try{
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
-            const response = await axios.get(`http://localhost:5000/api/users/${user.uid}`);
+            const token = await user.getIdToken();
+            const response = await axios.get(`http://localhost:5000/api/users/${user.uid}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
 
-            console.log(response);
-            if(response.status === 200){
-                alert(`Email: ${response.data.email} `)
-            }
+            const userData = response.data;
+            setUser(userData);
+
+           if(userData.role === 'organizer'){
+                navigate('/organizer-dashboard');
+           }
         }catch (err){
             let message = 'An error occurred. Please try again.';
             if (err.code === 'auth/invalid-credential') message = 'Invalid email or password.';
