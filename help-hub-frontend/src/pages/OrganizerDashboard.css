@@ -1,0 +1,14 @@
+
+
+.organizer-dashboard{
+    padding: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.organizer-dashboard h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #333;
+}
