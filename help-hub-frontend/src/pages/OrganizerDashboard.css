@@ -12,3 +12,23 @@
   margin-bottom: 2rem;
   color: #333;
 }
+
+.reate-event-btn {
+  margin: 20px 0;
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.create-event-btn:hover {
+  background-color: #45a049;
+}
+
+.event-list {
+  margin-top: 20px;
+}

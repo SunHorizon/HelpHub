@@ -1,0 +1,34 @@
+
+
+.event-card{
+    display: flex;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.event-image{
+    width: 150px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 16px;
+}
+
+.event-details{
+    flex: 1;
+}
+
+.event-title {
+  margin: 0;
+  font-size: 1.4rem;
+  color: #333;
+}
+
+.event-description {
+  margin: 8px 0;
+  color: #666;
+}

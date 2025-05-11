@@ -3,12 +3,13 @@ import './EventForm.css'
 import axios from 'axios'
 
 
-function Eventform ({ organizerId }) {
+function Eventform ({ organizerId, onEventCreated }) {
 
     const [formData, setFormData] = useState({
         title: '',
         description: '',
-        datetime: '',
+        datetimeStart: '',
+        datetimeEnd: '',
         location: '',
         contactEmail: '',
         imageUrl: null,
@@ -27,16 +28,22 @@ function Eventform ({ organizerId }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        const data = new FormData();
+        Object.entries(formData).forEach(([key, value]) => {
+            data.append(key, value);
+        });
+        data.append("organizerId", organizerId);
+
         try{
-            await axios.post('http://localhost:5000/api/events', {
-                ...formData,
-                "organizerId": organizerId
-            });
+            await axios.post('http://localhost:5000/api/events', data);
             setSuccessMessage('Event created successfully!');
+            onEventCreated();
             setFormData({
                 title: '',
                 description: '',
-                datetime: '',
+                datetimeStart: '',
+                datetimeEnd: '',
                 location: '',
                 contactEmail: '',
                 image: null
@@ -54,7 +61,10 @@ function Eventform ({ organizerId }) {
             <form onSubmit={handleSubmit} className='event-form'>
                 <input type='text' name='title' placeholder='Title' value={formData.title} onChange={handleChange} required />
                 <textarea name='description' placeholder='Description' value={formData.description}  onChange={handleChange} required/>
-                <input type='datetime-local' name='datetime' value={formData.datetime} onChange={handleChange} required />
+                <label>Start Event:</label>
+                <input type='datetime-local' name='datetimeStart' value={formData.datetimeStart} onChange={handleChange} required />
+                <label>End Event:</label>
+                <input type='datetime-local' name='datetimeEnd' value={formData.datetimeEnd} onChange={handleChange} required />
                 <input type='text' name='location' placeholder='Location' value={formData.location} onChange={handleChange} required/>
                 <input type='email' name='contactEmail' placeholder='Contact Email' value={formData.contactEmail} onChange={handleChange} required/>
                 <input type='file' name='imageUrl' accept='image/*' onChange={handleChange} />

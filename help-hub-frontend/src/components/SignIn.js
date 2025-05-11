@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import { Link, useNavigate } from 'react-router-dom';
@@ -11,7 +11,7 @@ function SignIn(){
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const { setUser } = useUser();
+    const { setUser, user } = useUser();
 
     const navigate = useNavigate();
 
@@ -42,6 +42,13 @@ function SignIn(){
         }
     }
 
+    useEffect(() => {
+        if(user){
+            if(user.role === 'organizer'){
+                navigate('/organizer-dashboard');
+            }
+        }
+    }, [user, navigate])
 
     return (
         <div className='auth-container'>

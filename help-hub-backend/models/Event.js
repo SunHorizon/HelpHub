@@ -3,7 +3,8 @@ const mangoose = require('mongoose');
 const eventSchema = new mangoose.Schema({
     title: { type: String, required: true },
     description: String,
-    datetime: { type: Date, required: true},
+    datetimeStart: { type: Date, required: true},
+    datetimeEnd: { type: Date, required: true},
     location: String,
     contactEmail: String,
     imageUrl: String,
