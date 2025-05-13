@@ -13,6 +13,9 @@ const OrganizerDashboard = () => {
     const [showForm, setShowForm] = useState(false);
     const [event, setEvents] = useState([]);
     const [showDropdown, setShowDropdown] = useState(false);
+    const [editingForm, setEditingForm] = useState(null);
+
+
     const dropdownRef = useRef(null);  // Reference for dropdown menu
     const navigate = useNavigate();
 
@@ -31,7 +34,7 @@ const OrganizerDashboard = () => {
             }
         };
         handleEvent();
-    })
+    }, [user])
 
     // Handle outside click to close the dropdown
     useEffect(() => {
@@ -71,6 +74,22 @@ const OrganizerDashboard = () => {
         } 
     }, [user, navigate])
 
+    const handleDeleteEvent = async (eventID) => {
+        try{
+            await axios.delete(`http://localhost:5000/api/events/${eventID}`);
+            const newEvents = event.filter(e => e._id !== eventID);
+            setEvents(newEvents);
+        } catch (err){
+            console.log('Error deleting event:', err);
+        }
+
+    }
+
+    const handleEdit = (event) => {
+        setEditingForm(event);
+        setShowForm(true);
+    }
+
     return (
         <div>
             <header className='dashboard-header'>
@@ -91,22 +110,27 @@ const OrganizerDashboard = () => {
 
             <main className='organizer-dashboard'>     
                 <h1>Your Events</h1>
-                <button onClick={toggleForm} className='reate-event-btn'>
+                <button onClick={ () => {toggleForm(); setEditingForm(null)} } className='reate-event-btn'>
                     {showForm ? 'Close Event Form' : 'Create New Event'}
                 </button>
-                {showForm && <Eventform organizerId={user?.uid} onEventCreated={fetchEvents}/>}
+                {showForm && 
+                    <Eventform 
+                        organizerId={user?.uid} 
+                        eventToEdit={editingForm}
+                        onEventCreatedOrUpdate={() => {
+                            setEditingForm(null);
+                            fetchEvents();
+                        }}                                           
+                    />}
 
                 <div className='event-list'>
                     {event.length > 0 ? (
                         event.map(event => (
                             <EventCard 
                                 key={event._id}
-                                title={event.title}
-                                description={event.description}
-                                datetimeStart={event.datetimeStart}
-                                datetimeEnd={event.datetimeEnd}
-                                contactEmail={event.contactEmail}
-                                imageUrl={event.imageUrl}
+                                event={event}
+                                onEdit={handleEdit}
+                                onDelete={handleDeleteEvent}
                             />
                         ))
                     ) : (

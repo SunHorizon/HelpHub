@@ -32,9 +32,11 @@ router.get('/organizer/:id', async (req, res) => {
 })
 
 // update event
-router.put('/:id', async (req, res) => {
+router.put('/:id', upload.single('imageUrl'), async (req, res) => {
+    const { title, description, datetimeStart, datetimeEnd, location, contactEmail, organizerId } = req.body;
+    const imageUrl = req.file ? `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}` : '';
     try{
-        await Event.findByIdAndUpdate( req.params.id, req.body);
+        await Event.findByIdAndUpdate( req.params.id, {title, description, datetimeStart, datetimeEnd, location, contactEmail, imageUrl, organizerId});
         res.json({ message: 'Event updated successfully'});
     }catch(error){
         res.status(500).json({ message: 'Server error'});

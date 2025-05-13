@@ -17,14 +17,14 @@ export const UserProvider = ({ children }) => {
                         Authorization: `Bearer ${token}`
                     }
                 });
-                setUser(response.data);
+                setUser(response.data); 
             }else{
                 setUser(null)
             }
         });
 
         return () => unsubscribe();
-    })
+    }, [])
 
     return(
         <UserContext.Provider value={{user, setUser}}>
