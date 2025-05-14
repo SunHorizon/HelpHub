@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 const userRouter = require('./routers/users');
 const eventRouter = require('./routers/events');
+const shiftRouter = require('./routers/shifts');
 
 verifyToken = require("./testFirebase");
 
@@ -30,6 +31,10 @@ app.use('/api/users', userRouter);
 
 // event router
 app.use('/api/events', eventRouter);
+
+
+// shift router
+app.use('/api/shifts', shiftRouter);
 
 
 app.listen(PORT, () => {

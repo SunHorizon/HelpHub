@@ -1,0 +1,22 @@
+
+
+.shift-list {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #f9f9f9;
+    border-radius: 8px;
+}
+
+.shift-list h4 {
+    margin-bottom: 0.5rem;
+}
+
+.shift-item {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #ddd;
+    font-size: 0.95rem;
+}
+
+.shift-item:last-child {
+  border-bottom: none;
+}

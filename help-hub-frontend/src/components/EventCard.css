@@ -1,7 +1,6 @@
 
 
-.event-card{
-  display: flex;
+.event-card {
   border: 1px solid #ddd;
   border-radius: 10px;
   padding: 16px;
@@ -10,7 +9,11 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
-.event-image{
+.card {
+  display: flex;
+}
+
+.event-image {
   width: 150px;
   height: 100px;
   object-fit: cover;
@@ -33,7 +36,7 @@
   color: #666;
 }
 
-.event-card-actions{
+.event-card-actions {
   gap: 10px;
   margin-top: 10;
 }
@@ -65,5 +68,25 @@
 
 .event-button.delete:hover {
   background-color: #e53935;
+  transform: scale(1.02);
+}
+
+.shift-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  margin-left: 10px;
+}
+
+.shift-button.shift{
+  background-color: #333300;
+  color: white;
+}
+
+.shift-button.shift:hover {
+  background-color: #666600;
   transform: scale(1.02);
 }
