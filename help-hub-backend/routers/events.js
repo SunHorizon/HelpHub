@@ -24,7 +24,11 @@ router.post('/',  upload.single('imageUrl'), async (req, res) => {
 // get all the events by the organizer
 router.get('/organizer/:id', async (req, res) => {
     try{
-        const events = await Event.find({ organizerId: req.params.id})
+        const now = new Date();
+        const events = await Event.find({ 
+            organizerId: req.params.id,
+            datetimeEnd: { $gte: now}
+        })
         res.json(events);
     } catch (error){
         res.status(500).json({ message: 'Server error'});

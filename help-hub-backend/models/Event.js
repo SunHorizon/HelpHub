@@ -12,5 +12,13 @@ const eventSchema = new mangoose.Schema({
 
 }, { timestamps: true})
 
+eventSchema.virtual('status').get(function () {
+    const now = new Date();
+    return now > this.datetimeEnd ? 'expired' : 'active';
+})
+
+eventSchema.set('toJSON', { virtuals: true });
+eventSchema.set('toObject', { virtuals: true });
+
 module.exports = mangoose.model('Event', eventSchema);
 

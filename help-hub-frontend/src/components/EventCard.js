@@ -58,7 +58,12 @@ function EventCard ({ event, onEdit, onDelete }){
                 <button className='shift-button shift' onClick={toggleShiftform}>
                     {showShiftForm ? 'Hide Shifts': "Add Shifts"}
                 </button>
-                {showShiftForm &&  <ShiftForm eventId={event._id} onShiftCreated={handleShiftAdded} />}
+                {showShiftForm &&  
+                <ShiftForm 
+                    eventId={event._id} 
+                    onShiftCreated={handleShiftAdded}  
+                    eventStartDate={event.datetimeStart} 
+                    eventEndDate={event.datetimeEnd}/>}
             </div>
         </div>
     )
