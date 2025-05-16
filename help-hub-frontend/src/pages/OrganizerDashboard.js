@@ -59,7 +59,6 @@ const OrganizerDashboard = () => {
         try{
             await signOut(auth);
             setUser(null); 
-           
         } catch (error){
             console.error('Logout failed:', error);
         }

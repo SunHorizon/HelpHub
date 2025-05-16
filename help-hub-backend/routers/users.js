@@ -3,16 +3,25 @@ const express = require('express');
 
 const router = express.Router();
 const User = require('../models/User');
+const admin = require('../firebase');
 
 router.post('/', async (req, res) => {
-
-    const { uid, email, role } = req.body;
+    
+    const { email, role, password } = req.body;
     try{
-        const newUser = new User({ uid, email, role });
+        const response = await admin.auth().createUser({
+            email,
+            password
+        })
+        const newUser = new User({ uid: response.uid , email: response.email, role });
         await newUser.save();
         res.status(201).json({ message: 'User Saved'});
     }catch(err){
-        res.status(500).json({ message: 'Server error'});
+        if(err.codePrefix === 'auth'){
+            res.status(207).json({err});
+        }else{
+            res.status(500).json({ error: 'Server error' });
+        }
     }
 });
 

@@ -46,6 +46,8 @@ function SignIn(){
         if(user){
             if(user.role === 'organizer'){
                 navigate('/organizer-dashboard');
+            }else if(user.role === 'volunteer'){
+                navigate('/volunteer-dashboard');
             }
         }
     }, [user, navigate])

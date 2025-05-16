@@ -33,6 +33,20 @@ router.get('/organizer/:id', async (req, res) => {
     } catch (error){
         res.status(500).json({ message: 'Server error'});
     }
+
+})
+// get all available events by 
+router.get('/available', async (req, res) => {
+    try{
+        const now = new Date();
+        const events = await Event.find({ 
+            datetimeEnd: { $gte: now}
+        }).sort({ datetimeStart: 1 });
+        
+        res.json(events);
+    } catch (error){
+        res.status(500).json({ message: 'Server error'});
+    }
 })
 
 // update event

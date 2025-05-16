@@ -1,6 +1,4 @@
 import React, { useState } from 'react'
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebase';
 import './auth.css'; 
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios'
@@ -24,28 +22,28 @@ function SignUp(){
             return;
         }
         try{
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            const user = userCredential.user;
             setSuccessMessage('Creating Account...');
-
-            await axios.post('http://localhost:5000/api/users', {
-                uid: user.uid,
-                email: user.email,
+            const response = await axios.post('http://localhost:5000/api/users', {
                 role: userType,
+                email: email,
+                password: password,
             })
 
-            setSuccessMessage('Account created successfully! Redirecting to sign-in...');
-            setTimeout(() => {
-                setSuccessMessage('');
-                navigate('/');
-            }, 3000);
-
+            if(response && response.status === 207){
+                setSuccessMessage('')
+                setError(response.data.err.message);
+            }
+            else if(response.status === 201)
+            {
+                setSuccessMessage('Account created successfully! Redirecting to sign-in...');
+                setTimeout(() => {
+                    setSuccessMessage('');
+                    navigate('/');
+                }, 3000);
+            }
         }catch(err){
             setSuccessMessage('')
             let message = 'An error occurred. Please try again.';
-            if (err.code === 'auth/email-already-in-use') message = 'Email is already in use.';
-            if (err.code === 'auth/invalid-email') message = 'Invalid email address.';
-            if (err.code === 'auth/weak-password') message = 'Password should be at least 6 characters.';
             setError(message);
         }
 

@@ -11,6 +11,7 @@ export const UserProvider = ({ children }) => {
     useEffect(() =>{
         const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
             if(firebaseUser){
+                console.log(firebaseUser);
                 const token = await firebaseUser.getIdToken();
                 const response = await axios.get(`http://localhost:5000/api/users/${firebaseUser.uid}`, {
                     headers: {
