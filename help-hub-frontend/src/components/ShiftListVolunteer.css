@@ -1,0 +1,39 @@
+.shift-list {
+  margin-top: 1rem;
+}
+
+.shift-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background-color: #f9f9f9;
+}
+
+.shift-card p {
+  margin: 0.3rem 0;
+}
+
+.shift-card button {
+  margin-top: 0.5rem;
+  background-color: #28a745;
+  color: white;
+  padding: 0.4rem 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.shift-card button:hover {
+  background-color: #218838;
+}
+
+.already-signed {
+  color: #007bff;
+  font-weight: bold;
+}
+
+.full-shift {
+  color: red;
+  font-weight: bold;
+}

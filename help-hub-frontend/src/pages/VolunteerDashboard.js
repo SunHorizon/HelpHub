@@ -5,6 +5,7 @@ import { auth } from "../firebase";
 import { signOut } from 'firebase/auth';
 import './VolunteerDashboard.css'
 import { useNavigate } from 'react-router-dom';
+import VolunteerEventCard from "../components/VolunteerEventCard";
 
 
 const VolunteerDashboard = () => {
@@ -82,7 +83,7 @@ const VolunteerDashboard = () => {
             <main className="volunteer-dashbaord">
                 <h1>Available Events</h1>
                 {event.map(event => (
-                    <div>{event.title}</div>
+                    <VolunteerEventCard  key={event._id} event={event}/>
                 ))}
                 <hr />
                 <h2>Your Commitments</h2>
