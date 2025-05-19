@@ -4,6 +4,8 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 const admin = require('../firebase');
+const Shift = require('../models/Shifts')
+const mongoose = require('mongoose');
 
 router.post('/', async (req, res) => {
     
@@ -34,6 +36,25 @@ router.get('/:uid', async ( req, res) => {
         res.status(500).json({ error: 'Server error' });
     }
 });
+
+
+router.get('/:userId/commitments', async (req, res) => {
+    const { userId } = req.params;
+    const now = new Date();
+
+    try{
+        const shifts = await Shift.find({
+            volunteers: userId, // ensures proper matching
+            endDateTime: { $gte: now } // Only future/present shifts
+        }).populate('eventId');
+        
+        res.status(200).json(shifts);
+    } catch (err){
+        console.error('Error fetching commitments:', err);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
 
 
 module.exports = router;

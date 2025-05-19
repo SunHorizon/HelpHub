@@ -5,8 +5,7 @@ const shiftSchema = new mangoose.Schema({
     startDateTime: { type: Date, required: true},
     endDateTime: { type: Date, required: true},
     spots: { type: Number, required: true },
-    spotsTaken: Number,
-    volunteers: [String],
+    volunteers: [{ type: mangoose.Schema.Types.ObjectId, ref: 'User' }],
     role: { type: String },
 
 }, { timestamps: true})

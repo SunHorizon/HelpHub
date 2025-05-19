@@ -5,6 +5,7 @@ require('dotenv').config();
 const userRouter = require('./routers/users');
 const eventRouter = require('./routers/events');
 const shiftRouter = require('./routers/shifts');
+const signupRouter = require('./routers/signups');
 
 verifyToken = require("./testFirebase");
 
@@ -35,6 +36,9 @@ app.use('/api/events', eventRouter);
 
 // shift router
 app.use('/api/shifts', shiftRouter);
+
+// signup router
+app.use('/api/signups', signupRouter);
 
 
 app.listen(PORT, () => {

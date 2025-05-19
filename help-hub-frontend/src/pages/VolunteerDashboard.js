@@ -6,6 +6,7 @@ import { signOut } from 'firebase/auth';
 import './VolunteerDashboard.css'
 import { useNavigate } from 'react-router-dom';
 import VolunteerEventCard from "../components/VolunteerEventCard";
+import Commitments from "../components/Commitments";
 
 
 const VolunteerDashboard = () => {
@@ -87,6 +88,7 @@ const VolunteerDashboard = () => {
                 ))}
                 <hr />
                 <h2>Your Commitments</h2>
+                <Commitments />
             </main>
         </div>
     )

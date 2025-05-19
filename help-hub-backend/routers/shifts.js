@@ -5,6 +5,8 @@ const Event = require('../models/Event')
 
 const router = express.Router();
 
+
+// create shifts
 router.post('/', async (req, res) => {
     try{  
         const {eventId, startDateTime, endDateTime, spots, role} = req.body;
@@ -25,13 +27,16 @@ router.post('/', async (req, res) => {
             console.log('Shift must fall within the event\'s start and end date.');
             return res.status(400).json({ message: 'Shift must fall within the event\'s start and end date.' });
         }
+
+        spotsTaken = 0;
     
         const shifts = new Shift({
             eventId,
             startDateTime,
             endDateTime,
             spots,
-            role
+            role,
+            spotsTaken,
         });
 
         await shifts.save();
@@ -44,6 +49,7 @@ router.post('/', async (req, res) => {
 });
 
 
+// get shifts
 router.get('/event/:eventId', async (req, res) => {
     try{
         const shifts = await Shift.find({ eventId: req.params.eventId });

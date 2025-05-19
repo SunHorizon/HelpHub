@@ -1,0 +1,15 @@
+.commitment-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background-color: #f3f7ff;
+}
+
+.commitment-card h3 {
+  margin-top: 0;
+}
+
+.commitment-card p {
+  margin: 0.3rem 0;
+}
